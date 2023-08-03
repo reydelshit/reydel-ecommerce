@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import { getProduct } from '../actions/get-products';
 import { deleteProduct } from '../actions/delete-product';
+import UpdateProductForm from './UpdateProductForm';
+
 import Image from 'next/image';
 import {
   Select,
@@ -41,6 +43,7 @@ interface Product {
 export default function ListProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [showUpdateModal, setShowUpdateModal] = useState<Boolean>(false);
+  const [productId, setProductId] = useState<number>(0);
 
   async function fetchProduct() {
     const products = await getProduct();
@@ -59,12 +62,17 @@ export default function ListProducts() {
     );
   };
 
+  const handleShowModal = (id: number) => {
+    setShowUpdateModal(!showUpdateModal);
+    setProductId(id);
+  };
+
   return (
     <div className="w-full flex justify-center p-2">
       {products.length === 0 ? (
         <LoadingProducts />
       ) : (
-        <div className="flex flex-col">
+        <div className="flex flex-col relative w-full">
           <div className="self-end mb-4">
             <Select>
               <SelectTrigger className="w-[180px]">
@@ -95,7 +103,7 @@ export default function ListProducts() {
             <TableBody>
               {products.map((prod) => {
                 return (
-                  <TableRow>
+                  <TableRow key={prod.id}>
                     <TableCell className="font-medium">{prod.id}</TableCell>
                     <TableCell className="font-medium">
                       <img
@@ -121,9 +129,7 @@ export default function ListProducts() {
                           Delete
                         </Button>
 
-                        <Button
-                          onClick={() => setShowUpdateModal(!showUpdateModal)}
-                        >
+                        <Button onClick={() => handleShowModal(prod.id)}>
                           Update
                         </Button>
                       </div>
@@ -133,37 +139,14 @@ export default function ListProducts() {
               })}
             </TableBody>
           </Table>
+          {showUpdateModal && (
+            <UpdateProductForm
+              productId={productId}
+              setShowUpdateModal={setShowUpdateModal}
+            />
+          )}
         </div>
       )}
     </div>
   );
-}
-
-{
-  /* <Card className="w-[20rem] flex flex-col">
-              <CardHeader>
-                <div className="flex justify-end items-end gap-4 w-full">
-                  <Button onClick={() => deleteProduct(prod.id)}>Delete</Button>
-
-                  <Button onClick={() => setShowUpdateModal(!showUpdateModal)}>
-                    Update
-                  </Button>
-                </div>
-
-                <img
-                  className="w-full h-[15rem] object-cover rounded-md mb-4"
-                  src="https://i.pinimg.com/236x/d3/f4/94/d3f4949e263a70572fc94f008063e1e9.jpg"
-                  alt={prod.name}
-                />
-                <CardTitle className="text-2xl font-bold">
-                  {prod.name}
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p>{prod.description}</p>
-              </CardContent>
-              <CardFooter>
-                <h2 className="font-bold">₱ {prod.price}</h2>
-              </CardFooter>
-            </Card> */
 }

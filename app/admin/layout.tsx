@@ -1,4 +1,4 @@
-import SideBar from './components/SideBar';
+import SideBar from './products/components/SideBar';
 import { Suspense } from 'react';
 import Loading from './loadings';
 

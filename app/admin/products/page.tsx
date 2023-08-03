@@ -2,8 +2,8 @@ import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import ProductForm from '../components/ProductForm';
-import ListProducts from '../components/ListProducts';
+import ProductForm from './components/ProductForm';
+import ListProducts from './components/ListProducts';
 
 export default function Page() {
   return (
