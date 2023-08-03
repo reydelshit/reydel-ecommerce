@@ -14,7 +14,7 @@ import { redirect } from 'next/navigation';
 //   userId: string | undefined;
 // };
 
-export async function addPost(formData: FormData) {
+export async function addProduct(formData: FormData) {
   const session = await getServerSession(authOptions);
 
   const product = String(formData.get('product'));

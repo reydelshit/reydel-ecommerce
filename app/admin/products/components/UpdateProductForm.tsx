@@ -46,7 +46,8 @@ export default function UpdateProductForm({
     getProductForUpdateFunction();
   }, [productId]);
 
-  const handleUpdateSubmit = () => {
+  const handleUpdateSubmit = (e: any) => {
+    e.preventDefault();
     console.log('ndjabdjhbajd');
     updateProduct({
       id: productId,
@@ -57,7 +58,8 @@ export default function UpdateProductForm({
       image,
     });
 
-    // setShowUpdateModal(false);
+    // console.log(productId);
+    setShowUpdateModal(false);
   };
 
   return (
@@ -76,12 +78,7 @@ export default function UpdateProductForm({
         </Label>
 
         <div className="mb-4">
-          <Select
-            value={category}
-            // onValueChange={(e) => setCategory(e)}
-            required
-            name="category"
-          >
+          <Select value={category} required name="category">
             <SelectTrigger className="w-full">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
@@ -133,7 +130,7 @@ export default function UpdateProductForm({
         </Label>
         <Button
           className="w-[50%] self-center mt-5"
-          onClick={() => handleUpdateSubmit()}
+          onClick={handleUpdateSubmit}
         >
           Update
         </Button>

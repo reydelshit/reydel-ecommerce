@@ -1,4 +1,4 @@
-import SideBar from './products/components/SideBar';
+import SideBar from './components/SideBar';
 import { Suspense } from 'react';
 import Loading from './loadings';
 
@@ -15,10 +15,6 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     {
       name: 'Product Tracker',
       link: '/admin/tracker',
-    },
-    {
-      name: 'Categories',
-      link: '/admin/categories',
     },
     {
       name: 'Reviews & Ratings',

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { getProduct } from '../actions/get-products';
 import { deleteProduct } from '../actions/delete-product';
 import UpdateProductForm from './UpdateProductForm';
+import TableContainer from './TableContainer';
 
 import Image from 'next/image';
 import {
@@ -44,6 +45,7 @@ export default function ListProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [showUpdateModal, setShowUpdateModal] = useState<Boolean>(false);
   const [productId, setProductId] = useState<number>(0);
+  const [category, setCategory] = useState<string>('All');
 
   async function fetchProduct() {
     const products = await getProduct();
@@ -67,6 +69,11 @@ export default function ListProducts() {
     setProductId(id);
   };
 
+  const handleCategory = (event: string) => {
+    const selectedValue = event;
+    setCategory(selectedValue);
+  };
+
   return (
     <div className="w-full flex justify-center p-2">
       {products.length === 0 ? (
@@ -74,15 +81,16 @@ export default function ListProducts() {
       ) : (
         <div className="flex flex-col relative w-full">
           <div className="self-end mb-4">
-            <Select>
+            <Select onValueChange={handleCategory}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Category" />
+                <SelectValue placeholder="All" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="All">All</SelectItem>
                 <SelectItem value="Phone">Phone</SelectItem>
                 <SelectItem value="Computer">Computer</SelectItem>
                 <SelectItem value="Flash Drive">Flash Drive</SelectItem>
-                <SelectItem value="Flash Drive">Other</SelectItem>
+                <SelectItem value="Other">Other</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -101,42 +109,19 @@ export default function ListProducts() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {products.map((prod) => {
-                return (
-                  <TableRow key={prod.id}>
-                    <TableCell className="font-medium">{prod.id}</TableCell>
-                    <TableCell className="font-medium">
-                      <img
-                        className="w-full h-[8rem] object-contain rounded-md mb-4"
-                        src={prod.image}
-                        alt={prod.name}
-                      />
-                    </TableCell>
-                    <TableCell className="text-center">{prod.name}</TableCell>
-                    <TableCell className="text-center">
-                      {prod.category}
-                    </TableCell>
-
-                    <TableCell className="text-center">
-                      {prod.description}
-                    </TableCell>
-                    <TableCell className="text-right font-bold w-[10rem]">
-                      ₱ {prod.price}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex justify-end items-end gap-2 w-full">
-                        <Button onClick={() => deleteProduct(prod.id)}>
-                          Delete
-                        </Button>
-
-                        <Button onClick={() => handleShowModal(prod.id)}>
-                          Update
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+              {products
+                .filter(
+                  (prod) =>
+                    category === 'All' || prod.category === String(category),
+                )
+                .map((prod) => (
+                  <TableContainer
+                    key={prod.id}
+                    product={prod}
+                    handleShowModal={handleShowModal}
+                    deleteProduct={deleteProduct}
+                  />
+                ))}
             </TableBody>
           </Table>
           {showUpdateModal && (

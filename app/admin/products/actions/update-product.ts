@@ -17,7 +17,7 @@ export async function updateProduct({
   price: number;
   image: string;
 }) {
-  const updateProduct = await prisma.product.update({
+  const product = await prisma.product.update({
     where: {
       id: id,
     },
@@ -29,6 +29,5 @@ export async function updateProduct({
       image,
     },
   });
-
-  return updateProduct;
+  return product;
 }

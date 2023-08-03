@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-import { addPost } from '../actions/add-product';
+import { addProduct } from '../actions/add-product';
 
 import {
   Select,
@@ -16,7 +16,7 @@ import {
 
 export default function ProductForm() {
   async function handleSubmit(formData: FormData) {
-    await addPost(formData);
+    await addProduct(formData);
   }
 
   return (
@@ -41,7 +41,7 @@ export default function ProductForm() {
               <SelectItem value="Phone">Phone</SelectItem>
               <SelectItem value="Computer">Computer</SelectItem>
               <SelectItem value="Flash Drive">Flash Drive</SelectItem>
-              <SelectItem value="Flash Drive">Other</SelectItem>
+              <SelectItem value="Other">Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
