@@ -2,11 +2,13 @@ import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ProductForm from '../components/ProductForm';
+import ListProducts from '../components/ListProducts';
 
 export default function Page() {
   return (
-    <div className="w-full py-2">
-      <Tabs defaultValue="account">
+    <div className="w-full">
+      <Tabs defaultValue="product">
         <div className="flex justify-between items-center w-full border-2 p-2 h-20">
           <TabsList className="w-[400px] h-[3rem]">
             <TabsTrigger value="product">Products</TabsTrigger>
@@ -20,8 +22,12 @@ export default function Page() {
 
         <Separator />
 
-        <TabsContent value="product">list of product here</TabsContent>
-        <TabsContent value="add-product">add product here</TabsContent>
+        <TabsContent value="product">
+          <ListProducts />
+        </TabsContent>
+        <TabsContent value="add-product">
+          <ProductForm />
+        </TabsContent>
       </Tabs>
     </div>
   );

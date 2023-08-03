@@ -16,10 +16,11 @@ export default function SideBar({ links }: SideBarProps) {
   const pathname = usePathname();
 
   return (
-    <div className="flex flex-col border-r-2 p-4 h-screen w-[15rem]">
+    <div className="flex flex-col border-r-2 p-4 h-screen w-[25rem]">
       {links.map((link, index) => {
         return (
           <Button
+            key={index}
             variant="ghost"
             className={`${
               pathname == link.link
@@ -27,9 +28,7 @@ export default function SideBar({ links }: SideBarProps) {
                 : 'hover:bg-transparent'
             } text-black p-2 justify-start`}
           >
-            <Link key={index} href={link.link}>
-              {link.name}
-            </Link>
+            <Link href={link.link}>{link.name}</Link>
           </Button>
         );
       })}
